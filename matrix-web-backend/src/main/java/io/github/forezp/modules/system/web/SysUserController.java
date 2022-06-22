@@ -122,29 +122,6 @@ public class SysUserController {
 
     @GetMapping("/info")
     public RespDTO info() {
-
-//        String token=null;
-//        try {
-//             token= HttpUtils.getHeaders(HttpUtils.getHttpServletRequest()).get("Authorization");
-//
-//        }catch (Exception e){
-//          ExceptionUtils.printRootCauseStackTrace(e);
-//        }
-//
-//        if(StringUtils.isEmpty(token)){
-//            throw new AriesException(TOKEN_ISNULL);
-//        }
-//        try {
-//            Claims claims=JWTUtils.parseJWT(token);
-//            if(claims!=null){
-//                String id=claims.getId();
-//                String userId=claims.getSubject();
-//
-//            }
-//        } catch (Exception e) {
-//            ExceptionUtils.printRootCauseStackTrace(e);
-//        }
-
         Map<String, Object> result = new HashMap<>();
         QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("ismenu", 1);
