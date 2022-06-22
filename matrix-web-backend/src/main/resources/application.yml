@@ -5,7 +5,7 @@ server:
     timeout: 3600
 spring:
   profiles:
-    active: durid
+    active: druidLocal
 
   redis:
     host: localhost
