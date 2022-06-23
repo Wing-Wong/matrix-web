@@ -16,15 +16,26 @@ import static io.github.forezp.common.constant.JWTConstants.SALT_KEY;
 
 /**
  * Created by forezp on 2018/8/7.
+ * 登录认证工具类
  */
 public class JWTUtils {
 
 
+    /**
+     * 生产Token
+     * @param id JWT ID：是JWT的唯一标识
+     * @param subject JWT的主体，即它的所有人
+     * @param ttlMillis 失效哦时间
+     * @return 生产的token信息
+     * @throws Exception
+     */
     public static String createJWT(String id, String subject, long ttlMillis) throws Exception {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256; //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
+        //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        Map<String,Object> claims = new HashMap<String,Object>();//创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
+        //创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
+        Map<String,Object> claims = new HashMap<String,Object>();
 //        claims.put("uid", "DSSFAWDWADAS...");
 //        claims.put("user_name", "admin");
 //        claims.put("nick_name","DASDA121");
@@ -63,16 +74,26 @@ public class JWTUtils {
         return key;
     }
 
-//    public static void main(String[] args) throws Exception {
-//        JWTUtils util=   new JWTUtils();
-//        String ab=util.createJWT("jwt", "{id:100,name:xiaohong}", 600000);
-//        System.out.println(ab);
-//        String jwt="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7aWQ6MTAwLG5hbWU6eGlhb2hvbmd9IiwiZXhwIjoxNTYzMDkxMTM3LCJpYXQiOjE1NjMwOTA1MzcsImp0aSI6Imp3dCJ9.pyJF1pA824vTWqrfdam298mC47P8em8ndZG5AYwu28U";
-//        Claims c=util.parseJWT(jwt);//注意：如果jwt已经过期了，这里会抛出jwt过期异常。
-//        System.out.println(c.getId());//jwt
-//        System.out.println(c.getIssuedAt());//Mon Feb 05 20:50:49 CST 2018
-//        System.out.println(c.getSubject());//{id:100,name:xiaohong}
-//        System.out.println(c.getIssuer());//null
-//        System.out.println(c.get("uid", String.class));//DSSFAWDWADAS...
-//    }
+    /**
+     * main用于测试生产Token与Token解析
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+        // JWTUtils util = new JWTUtils();
+        // 创建token
+        String token = createJWT("jwt001", "{id:100,name:wangwenyuan}", 600000);
+        System.out.println("生成token: "+token);
+
+        // 根据jwt解析用户信息
+        String jwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7aWQ6MTAwLG5hbWU6d2FuZ3dlbnl1YW59IiwiaXNzIjoidGVzdCIsImV4cCI6MTY1NTk5OTAzMCwiaWF0IjoxNjU1OTk4NDMwLCJqdGkiOiJqd3QwMDEifQ.8leXZtYBLOCtvM3ohDGtVkFtcWzird6bsOG_IR1AaEo";
+        Claims c = parseJWT(jwt);//注意：如果jwt已经过期了，这里会抛出jwt过期异常。
+        System.out.println(c.getId());//jwt001
+        // jwt的签发时间
+        System.out.println(c.getIssuedAt());
+        System.out.println(c.getSubject());//{id:100,name:wangwenyuan}
+        // jwt发行人,createJWT中没设置故为null
+        System.out.println(c.getIssuer());
+        System.out.println(c.get("uid", String.class));//DSSFAWDWADAS...
+    }
 }
