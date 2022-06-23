@@ -8,10 +8,20 @@ export function getList(params) {
   })
 }
 
+// 新增任务
 export function save(params) {
   return request({
     url: '/task',
     method: 'post',
+    params
+  })
+}
+
+// 更新任务
+export function updateTask(params) {
+  return request({
+    url: '/task',
+    method: 'put',
     params
   })
 }
@@ -57,6 +67,7 @@ export function pauseTask(params) {
   })
 }
 
+// 新增任务分组
 export function addTaskGroup(params) {
   return request({
     url: '/task-group',
@@ -65,6 +76,7 @@ export function addTaskGroup(params) {
   })
 }
 
+// 更新任务分组
 export function updateTaskGroup(params) {
   return request({
     url: '/task-group',

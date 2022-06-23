@@ -37,6 +37,9 @@ public class QrtzCronTriggersController {
     }
 
 
+    /**
+     * 请求路由没有参数，使用提交方法(PUT方法)与addTask(POST方法)区分
+     */
     @PutMapping(value = "")
     public void updateTask(@RequestParam String taskName,
                            @RequestParam(value = "taskClassName") String taskClassName,

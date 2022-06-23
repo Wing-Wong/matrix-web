@@ -54,8 +54,8 @@ public class SysMenuController {
         if(sysMenuService.removeById(id)){
             return RespDTO.onSuc(null);
         }else {
-
-        } throw new AriesException(ErrorCode.INSERT_DATA_FAIL);
+            throw new AriesException(ErrorCode.INSERT_DATA_FAIL);
+        }
     }
 
 }

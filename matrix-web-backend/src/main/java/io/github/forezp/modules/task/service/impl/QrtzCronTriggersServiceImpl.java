@@ -69,7 +69,7 @@ public class QrtzCronTriggersServiceImpl extends ServiceImpl<QrtzCronTriggersMap
         try {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            log.info("创建定时任务失败" + e);
+            log.error("创建定时任务失败" + e);
             throw new AriesException(ADD_TASK_FAIL);
         }
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -135,7 +135,7 @@ public class QrtzCronTriggersServiceImpl extends ServiceImpl<QrtzCronTriggersMap
             // 按新的trigger重新设置job执行
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
-            log.info("更新定时任务失败" + e);
+            log.error("更新定时任务失败" + e);
             throw new Exception("更新定时任务失败");
         }
         UpdateWrapper updateWrapper = new UpdateWrapper();

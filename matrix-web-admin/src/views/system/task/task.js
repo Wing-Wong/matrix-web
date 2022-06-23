@@ -1,4 +1,5 @@
-import {remove, getList, save, pauseTask, resumeTask, taskGroupList} from '@/api/system/task'
+// import中变量(如updateTask) 为引入文件中(@/api/system/task)，对应的方法名
+import { remove, getList, save, updateTask, pauseTask, resumeTask, taskGroupList } from '@/api/system/task'
 
 export default {
   data() {
@@ -115,18 +116,19 @@ export default {
       this.formVisible = true
       this.isAdd = true
     },
-    saveOrUpdate(){
-      if(this.isAdd){
+    saveOrUpdate() {
+      if (this.isAdd) {
         this.save()
-      }else {
+      } else {
         this.update()
       }
     },
-    update(){
+    update() {
       var self = this
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          save({
+          // updateTask,对应到开头引入的方法
+          updateTask({
             id: self.form.id,
             taskName: self.form.taskName,
             taskClassName: self.form.taskClassName,
@@ -224,7 +226,7 @@ export default {
         this.isAdd = false
         this.form.taskName = this.selRow.triggerSimpleName
         this.form.taskGroupId = this.selRow.triggerGroup
-        this.form.taskGroupName=this.selRow.trifggerGroupName
+        this.form.taskGroupName = this.selRow.trifggerGroupName
         this.form.taskClassName = this.selRow.triggerName
         this.form.cronExpression = this.selRow.cronExpression
         this.formTitle = '修改任务'
