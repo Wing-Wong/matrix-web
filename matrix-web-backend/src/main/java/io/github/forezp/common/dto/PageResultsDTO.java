@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * @author: fangzhipeng.
  * @createTime: 2017/8/2.
+ * 存放分页的数据和分页的元数据
  */
 public class PageResultsDTO<T> {
     public List<T> list = new ArrayList<>();

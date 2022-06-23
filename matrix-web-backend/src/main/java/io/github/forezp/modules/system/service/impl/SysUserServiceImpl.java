@@ -55,8 +55,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     SysUserRoleMapper sysUserRoleMapper;
 
     public PageResultsDTO searchUsers(int page, int pageSize, String userId, String realname) {
-        Page<SysUser> sysLogPage = new Page<>(page, pageSize);
-        IPage<SysUser> sysUserIPage = sysUserMapper.searchUsers(sysLogPage, userId, realname);
+        Page<SysUser> sysUserPage = new Page<>(page, pageSize);
+        IPage<SysUser> sysUserIPage = sysUserMapper.searchUsers(sysUserPage, userId, realname);
         PageResultsDTO result = new PageResultsDTO(page, pageSize);
         result.setTotalCount(sysUserIPage.getTotal());
         result.setTotalPage((int) sysUserIPage.getTotal(), pageSize);
