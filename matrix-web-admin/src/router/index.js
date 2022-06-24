@@ -55,6 +55,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  // 系统管理菜单
   {
     path: '/system',
     component: Layout,
@@ -87,7 +88,7 @@ export const asyncRouterMap = [
         path: 'mgr',
         name: 'Account',
         component: () => import('@/views/system/user/index'),
-        meta: {title: 'userMgr' }
+        meta: { title: 'userMgr' }
       },
       {
         path: 'role',
@@ -117,6 +118,7 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // 流程管理菜单
   {
     path: '/workflow',
     component: Layout,
@@ -180,6 +182,7 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // 任务管理菜单
   {
     path: '/task',
     component: Layout,
@@ -266,6 +269,8 @@ export const asyncRouterMap = [
   //     }
   //   ]
   // },
+
+  // 运维管理菜单
   {
     path: '/optionMgr',
     component: Layout,
@@ -281,13 +286,13 @@ export const asyncRouterMap = [
       {
         path: 'druid',
         name: 'druid',
-        component:() => import('@/views/operation/druid/index'),
+        component: () => import('@/views/operation/druid/index'),
         meta: { title: 'druid' }
       },
       {
         path: 'swagger',
         name: 'swagger',
-        component:() => import('@/views/operation/api/index'),
+        component: () => import('@/views/operation/api/index'),
         meta: { title: 'swagger' }
       },
       {
