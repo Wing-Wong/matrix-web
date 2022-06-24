@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * Created by forezp on 2018/8/3.
+ * Mybatis-Plus自动填充功能
  */
 @Component
 @Slf4j
@@ -30,6 +31,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object updateTime = getFieldValByName("updateTime", metaObject);
 
         if (createBy == null) {
+            /*
+             * 必须使用父类的setFieldValByName()或者setInsertFieldValByName/setUpdateFieldValByName方法，
+             * 否则不会根据注解FieldFill.xxx来区分。
+             */
             this.setFieldValByName("createBy", UserUtils.getCurrentUserWithDefault(), metaObject);//版本号3.0.6以及之前的版本
         }
         if (updateBy == null) {

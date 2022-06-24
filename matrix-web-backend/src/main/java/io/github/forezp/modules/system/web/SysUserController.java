@@ -37,6 +37,7 @@ import static io.github.forezp.common.exception.ErrorCode.USER_NOT_EXIST;
 /**
  * <p>
  * 用户 前端控制器
+ * Slf4j注解等同于：private final Logger logger = LoggerFactory.getLogger(当前类名.class);
  * </p>
  *
  * @author forezp
@@ -64,6 +65,7 @@ public class SysUserController {
 
     @GetMapping("/pagelist")
     public RespDTO searchUsers(@RequestParam int page, @RequestParam int pageSize, @RequestParam(required = false) String userId, @RequestParam(required = false) String realname) {
+        // 检查page和pageSize是否合理
         PageUtils.check(page, pageSize);
         PageResultsDTO sysUsers = sysUserService.searchUsers(page, pageSize, userId, realname);
         return RespDTO.onSuc(sysUsers);
