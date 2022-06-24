@@ -24,8 +24,8 @@ public class JWTUtils {
     /**
      * 生产Token
      * @param id JWT ID：是JWT的唯一标识
-     * @param subject JWT的主体，即它的所有人
-     * @param ttlMillis 失效哦时间
+     * @param subject JWT的主体，即它的所有人,登录方法中传的是用户id
+     * @param ttlMillis 失效时间
      * @return 生产的token信息
      * @throws Exception
      */

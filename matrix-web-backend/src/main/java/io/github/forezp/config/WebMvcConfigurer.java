@@ -26,6 +26,7 @@ import java.util.List;
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     /**
      * 定义排除拦截路径
+     * 这些请求是白名单请求，不需要验证Token
      */
     public static String[] EXCLUDE_PATH_PATTERN = {
             //文件上传和下载

@@ -28,6 +28,7 @@ public class UserUtils {
         try {
             Claims claims = JWTUtils.parseJWT(token);
             if (claims != null) {
+                // 登录方法中传的是用户id
                 String userId = claims.getSubject();
                 return userId;
 

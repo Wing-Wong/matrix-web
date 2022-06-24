@@ -27,7 +27,10 @@ import java.util.List;
 import static io.github.forezp.common.constant.CommonConstants.ROLE;
 import static io.github.forezp.common.exception.ErrorCode.NO_PERMISSION;
 
-
+/**
+ * 权限切面
+ * @author 王文渊
+ */
 @Aspect
 @Component
 @Slf4j
@@ -38,11 +41,17 @@ public class PermissionAspect implements Ordered {
     UserDetailService userDetailService;
 
 
+    /**
+     * Pointcut切入点，切点为注解@HasPermission
+     */
     @Pointcut("@annotation(io.github.forezp.permission.HasPermission)")
     public void permissionPointCut() {
 
     }
 
+    /**
+     * Around:环绕增强,也就是在permissionPointCut()方法前执行
+     */
     @Around("permissionPointCut()")
     public Object before(ProceedingJoinPoint point) throws Throwable {
         //去掉白名单
@@ -62,24 +71,33 @@ public class PermissionAspect implements Ordered {
         return point.proceed();
     }
 
+    /**
+     * 判断用户是否有某个权限
+     * @param hasPermission 注解中设置的值
+     * @return
+     */
     private boolean checkPermission(HasPermission hasPermission) {
+        // 根据token获取用户id
         String userId = UserUtils.getCurrentUser();
         if (StringUtils.isEmpty(userId)) {
             throw new AriesException(NO_PERMISSION);
         }
+        // 根据用户id获取用户对应的角色集和权限集
         UserDetail userDetail = userDetailService.getUserDetail(userId);
         if (userDetail == null) {
             throw new AriesException(NO_PERMISSION);
         }
         String hasRole = hasPermission.hasRole();
-        String pemission = hasPermission.hasPermission();
-        if (StringUtils.isEmpty(hasRole) && StringUtils.isEmpty(pemission)) {
-            log.info("HasPermission annotation is not correctedly used");
+        String permission = hasPermission.hasPermission();
+        if (StringUtils.isEmpty(hasRole) && StringUtils.isEmpty(permission)) {
+            log.info("HasPermission annotation is not correctly used");
             throw new AriesException(NO_PERMISSION);
         }
         if (!StringUtils.isEmpty(hasRole) && !hasRole.startsWith(ROLE)) {
             hasRole = ROLE + hasRole;
         }
+
+        // 判断用户的角色集是否包含注解上的hasRole
         boolean checkPermissionPassed = false;
         List<String> userRoles = userDetail.getUserRoles();
         if (!CollectionUtils.isEmpty(userRoles) && !StringUtils.isEmpty(hasRole)) {
@@ -90,10 +108,12 @@ public class PermissionAspect implements Ordered {
                 }
             }
         }
+
+        // 判断用户的权限集是否包含注解上的hasPermission
         List<String> userPermissions = userDetail.getUserPermissions();
-        if (!CollectionUtils.isEmpty(userPermissions) && !StringUtils.isEmpty(pemission)) {
+        if (!CollectionUtils.isEmpty(userPermissions) && !StringUtils.isEmpty(permission)) {
             for (String userPermission : userPermissions) {
-                if (userPermission.equals(pemission)) {
+                if (userPermission.equals(permission)) {
                     checkPermissionPassed = true;
                     break;
                 }
