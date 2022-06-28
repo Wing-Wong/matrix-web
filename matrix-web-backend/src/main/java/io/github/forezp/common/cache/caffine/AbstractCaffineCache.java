@@ -4,7 +4,10 @@ package io.github.forezp.common.cache.caffine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 
-
+/**
+ * 缓存抽象类
+ * @param <T>
+ */
 public abstract class AbstractCaffineCache<T> {
 
     protected LoadingCache<String, T> loadingCache;

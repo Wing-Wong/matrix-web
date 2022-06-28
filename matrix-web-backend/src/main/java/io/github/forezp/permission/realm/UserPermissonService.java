@@ -16,7 +16,9 @@ public class UserPermissonService {
     UserRolePermissionCache<SysUser> userRolePermissionCache;
 
     public SysUser getUserRolePerssion(String userId) {
+        // 先去缓存中取
         SysUser sysUser = (SysUser) userRolePermissionCache.get(userId);
+        // 缓存中没有，则查询数据库，并放入缓存中
         if (sysUser == null) {
             sysUser = sysUserMapper.selectUserRolePermission(userId);
             userRolePermissionCache.put(userId, sysUser);
